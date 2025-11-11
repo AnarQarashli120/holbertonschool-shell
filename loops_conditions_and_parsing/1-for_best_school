@@ -2,5 +2,6 @@
 # for loop
 for i in $(seq 10)
 do
+	: "$i"
 echo "Best School"
 done
