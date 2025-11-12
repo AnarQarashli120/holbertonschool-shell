@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+#grep bash
+ps aux | grep bash
