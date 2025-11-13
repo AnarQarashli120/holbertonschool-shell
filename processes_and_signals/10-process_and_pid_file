@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# Script that manages its own PID file and handles signals
+
+PIDFILE="/var/run/myscript.pid"
+
+# Fayla öz PID-ni yazırıq
+echo $$ > "$PIDFILE"
+
+# SIGTERM gələndə işləyəcək funksiya
+sigterm_handler() {
+    echo "I hate the kill command"
+    rm -f "$PIDFILE"
+    exit 0
+}
+
+# SIGINT (Ctrl+C) gələndə işləyəcək funksiya
+sigint_handler() {
+    echo "Y U no love me?!"
+}
+
+# SIGQUIT və SIGTERM üçün faylı silib çıxmaq
+sigquit_handler() {
+    rm -f "$PIDFILE"
+    exit 0
+}
+
+# Siqnallar üçün “trap” təyin edirik
+trap 'sigterm_handler' SIGTERM
+trap 'sigint_handler' SIGINT
+trap 'sigquit_handler' SIGQUIT
+
+# Sonsuz döngü
+while true; do
+    echo "To infinity and beyond"
+    sleep 2
+done
+
